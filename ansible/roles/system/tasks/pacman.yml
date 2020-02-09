@@ -1,0 +1,12 @@
+- name: Install pacman tools
+  become: yes
+  pacman:
+    name:
+      - reflector
+      - pacman-contrib
+
+- name: Optimize pacman mirrors
+  become: yes
+  shell: reflector --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+  # TODO: toggle a truthful flag when the installation ends
+  when: false

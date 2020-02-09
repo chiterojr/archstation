@@ -1,0 +1,28 @@
+- name: Install common tools by pacman
+  become: yes
+  pacman:
+    name:
+      - openssh
+      - openvpn
+      - git
+      - curl
+      - wget
+      - jq
+      - bind-tools
+      - tree
+      - htop
+      - unrar
+      - zip
+      - unzip
+      - ipcalc
+      - iw
+      - bc
+      - net-tools
+      - neofetch
+      - rsync
+
+- name: Install common tools by yay
+  yay:
+    name:
+      - apache-tools
+

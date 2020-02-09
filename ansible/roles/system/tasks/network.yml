@@ -1,0 +1,22 @@
+- name: Install connman
+  become: yes
+  pacman: name=connman
+
+- name: Install connman-ncurses
+  yay: name=connman-ncurses
+
+- name: Ensure connman config dir exists
+  become: yes
+  file: path=/etc/connman state=directory
+
+- name: Copy connman config
+  become: yes
+  copy: src=connman.conf dest=/etc/connman/main.conf
+
+- name: Enable and start connman
+  become: yes
+  systemd: name=connman enabled=yes state=started
+
+- name: Remove network tools from base
+  become: yes
+  pacman: name=netctl,dhcpcd state=absent

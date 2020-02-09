@@ -1,0 +1,5 @@
+- name: Install image tools
+  yay: name={{ item }}
+  loop:
+    - gocr
+    - gimp

@@ -1,0 +1,14 @@
+- include: tools.yml
+- include: pacman.yml
+#- include: network.yml
+#- include: modprobe.yml
+#- include: shell.yml
+#- include: keyboard.yml
+- include: audio.yml
+#- include: bluetooth.yml
+- include: multimedia.yml
+#- include: vim.yml
+- include: fonts.yml
+- include: window-manager.yml
+- include: look-and-feel.yml
+#- include: dotfiles.yml

@@ -1,0 +1,38 @@
+- name: Install Python PIP
+  become: yes
+  pacman: name=python-pip
+
+- name: Install AWS CLI
+  pip:
+    name: awscli
+    extra_args: --user 
+
+- name: Install Terraform
+  become: yes
+  pacman: name=terraform
+
+- name: Install Packer
+  become: yes
+  pacman: name=packer
+
+- name: Install Docker and Docker-Compose
+  become: yes
+  pacman:
+    name:
+      - docker
+      - docker-compose
+
+- name: Enable Docker Daemon
+  become: yes
+  systemd: name=docker enabled=yes state=started
+
+- name: Install Kubernetes Tools
+  become: yes
+  pacman: name=kubectl
+
+- name: Install Postman
+  yay: name=postman
+
+- name: Install PostgreSQL client and libs
+  become: yes
+  pacman: name=postgresql-libs

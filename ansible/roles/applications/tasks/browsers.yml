@@ -1,0 +1,8 @@
+- name: Install Chromium
+  become: yes
+  pacman: name=chromium
+
+- name: Install Firefox
+  become: yes
+  pacman: name=firefox
+

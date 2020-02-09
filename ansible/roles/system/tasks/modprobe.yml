@@ -1,0 +1,7 @@
+- name: Ensure modprobe config dir exists
+  become: yes
+  file: path=/etc/modprobe.d state=directory
+
+- name: Prevent warning user with internal buzzer
+  become: yes
+  copy: src=nobeep.conf dest=/etc/modprobe.d/nobeep.conf

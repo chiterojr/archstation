@@ -1,0 +1,28 @@
+# - name: Install themes
+#   yay: name={{ item }}
+#   loop:
+#     - numix-gtk-theme
+#     - numix-kde-theme-git
+#     - xcursor-breeze
+
+# - name: Copy GTK2 config file
+#   become: yes
+#   copy: src=gtk2 dest=/etc/gtk-2.0/gtkrc
+
+# - name: Copy GTK3 config file
+#   become: yes
+#   copy: src=gtk3 dest=/etc/gtk-3.0/settings.ini
+
+# - name: Copy cursor theme file
+#   become: yes
+#   copy: src=theme dest=/usr/share/icons/default/index.theme
+- name: Install arc-gtk-theme
+  become: yes
+  pacman:
+    name:
+      - arc-gtk-theme
+
+- name: Ensure gtk-3.0 config dir exists
+  file: 
+    path: ~/.config/gtk-3.0
+    state: directory

@@ -1,0 +1,10 @@
+- name: Install image tools
+  yay: name={{ item }}
+  loop:
+      - exiv2
+      - perl-image-exiftool
+      - libvips
+
+- name: Install image viewer
+  become: yes
+  pacman: name=sxiv

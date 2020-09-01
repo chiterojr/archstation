@@ -21,6 +21,10 @@
       - neofetch
       - rsync
 
+- name: Install Terminator
+  become: yes
+  pacman: name=terminator
+
 - name: Install common tools by yay
   yay:
     name:

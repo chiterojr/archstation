@@ -1,6 +1,5 @@
-- name: Install Chromium
-  become: yes
-  pacman: name=chromium
+- name: Install Google Chrome
+  yay: name=enpass-bin
 
 - name: Install Firefox
   become: yes

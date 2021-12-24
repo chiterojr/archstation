@@ -1,5 +1,5 @@
 - name: Install Google Chrome
-  yay: name=enpass-bin
+  yay: name=google-chrome
 
 - name: Install Firefox
   become: yes

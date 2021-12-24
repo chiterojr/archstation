@@ -2,11 +2,6 @@
   become: yes
   pacman: name=python-pip
 
-- name: Install AWS CLI
-  pip:
-    name: awscli
-    extra_args: --user
-
 - name: Install Docker and Docker-Compose
   become: yes
   pacman:

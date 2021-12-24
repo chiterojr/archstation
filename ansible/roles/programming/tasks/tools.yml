@@ -5,15 +5,7 @@
 - name: Install AWS CLI
   pip:
     name: awscli
-    extra_args: --user 
-
-- name: Install Terraform
-  become: yes
-  pacman: name=terraform
-
-- name: Install Packer
-  become: yes
-  pacman: name=packer
+    extra_args: --user
 
 - name: Install Docker and Docker-Compose
   become: yes

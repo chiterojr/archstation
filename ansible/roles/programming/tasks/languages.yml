@@ -6,12 +6,12 @@
   become: yes
   pacman: name=elixir
 
-- name: Install Clojure
-  become: yes
-  pacman: name=clojure
+# - name: Install Clojure
+#   become: yes
+#   pacman: name=clojure
 
-- name: Install Leiningen (Clojure)
-  yay: name=leiningen
+# - name: Install Leiningen (Clojure)
+#   yay: name=leiningen
 
 - name: Install GO
   become: yes

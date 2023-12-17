@@ -1,0 +1,88 @@
+{
+  "yaml.schemas": {
+    "file:///home/junior/.vscode-oss/extensions/atlassian.atlascode-2.8.3/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "atlascode.bitbucket.enabled": true,
+  "aws.profile": "profile:beblue",
+  "atlascode.jira.enabled": true,
+  "atlascode.bitbucket.pipelines.hideFiltered": false,
+  "atlascode.jira.jqlList": [
+    {
+      "id": "2bb9685f-e26e-47b2-87bc-3cb5736145a8",
+      "enabled": true,
+      "name": "My beblue Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "f666cbf6-8188-413c-8fde-7a184b0feb54",
+      "monitor": true
+    }
+  ],
+  "keyboard.dispatch": "keyCode",
+  "vsicons.associations.files": [
+    {
+      "icon": "terraform",
+      "extensions": [
+        "tf",
+        "tfvars"
+      ],
+      "format": "svg"
+    }
+  ],
+  "[markdown]": {
+    "editor.rulers": [
+      80
+    ]
+  },
+  "[solidity]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  },
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "go.toolsManagement.autoUpdate": true,
+  "json.maxItemsComputed": 50000,
+  "[yaml]": {
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[handlebars]": {
+    "editor.formatOnSave": false
+  },
+  "[html]": {
+    "editor.formatOnSave": false
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[python]": {
+    "editor.formatOnSave": false
+  },
+  // "python.linting.pylintEnabled": false,
+  // "python.linting.pylintArgs": [
+  //   "--enable=W0611"
+  // ],
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontFamily": "'Fira Mono'",
+  "haskell.manageHLS": "PATH",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "hardhat.telemetry": true,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "rust-analyzer.inlayHints.chainingHints.enable": false,
+  "rust-analyzer.inlayHints.closingBraceHints.enable": false,
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "workbench.colorTheme": "GitHub Dark",
+  "solidity.telemetry": false,
+  "window.title": "VSC: ${rootNameShort}",
+  "window.zoomLevel": -1
+  // "python.formatting.provider": "black",
+}

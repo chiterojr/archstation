@@ -194,3 +194,15 @@ for_window [class="Code - OSS"] move to workspace $ws3 focus
 for_window [class="Pcmanfm"] move to workspace $ws5 focus
 for_window [class="Mousepad"] move to workspace $ws6 focus
 for_window [class="Slack"] move to workspace $ws7 focus
+
+##################
+# COLORS
+##################
+# class                 border  backgr. text    indicator child_border
+client.focused          #333333 #333333 #ffffff #292d2e   #222222
+client.unfocused        #1c1c1c #1c1c1c #888888 #292d2e   #222222
+# client.focused          #000000 #000000 #ffffff #D35400   #ff00ff
+# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+# client.urgent           #2f343a #900000 #ffffff #900000   #900000
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+# client.background #2ECC71

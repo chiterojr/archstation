@@ -7,6 +7,7 @@
       - git
       - curl
       - wget
+      - inetutils
       - jq
       - bind-tools
       - tree
@@ -20,6 +21,7 @@
       - net-tools
       - neofetch
       - rsync
+      - tcpdump
 
 - name: Install Terminator
   become: yes

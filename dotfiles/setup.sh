@@ -11,10 +11,13 @@ find -H "$DIR" -maxdepth 5 | while read -r src; do
   # create a destination var for both, symlinks and mkdirs
   dst="$HOME/${src//"$DIR/"/}"
 
-  if [[ -f $src ]]; then
-    [[ -e $dst ]] && rm $dst
-    ln -s $src $dst
+  echo "$dst"
+
+  if [[ -f "$src" ]]; then
+    [[ -e "$dst" ]] && rm "$dst"
+    ln -s "$src" "$dst"
   else
-    mkdir -p $dst
+    mkdir -p "$dst"
   fi
+  echo
 done

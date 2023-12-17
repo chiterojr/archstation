@@ -15,4 +15,4 @@
 - name: Install aur fonts
   yay:
     name:
-      - siji-git
+      - siji-ng

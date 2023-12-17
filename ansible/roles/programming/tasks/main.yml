@@ -1,3 +1,3 @@
-- include: ides.yml
-- include: languages.yml
-- include: tools.yml
+- include_tasks: ides.yml
+- include_tasks: languages.yml
+- include_tasks: tools.yml

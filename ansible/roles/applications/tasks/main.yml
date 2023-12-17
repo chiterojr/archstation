@@ -1,5 +1,5 @@
-# - include: enpass.yml
-- include: communicators.yml
-- include: browsers.yml
-- include: office.yml
-- include: storage.yml
+# - include_tasks: enpass.yml
+- include_tasks: communicators.yml
+- include_tasks: browsers.yml
+- include_tasks: office.yml
+- include_tasks: storage.yml

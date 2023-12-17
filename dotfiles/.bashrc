@@ -27,3 +27,13 @@ export PATH="$PATH:$HOME/.npm-packages/bin"
 # configure golang
 export GOPATH="$HOME/dev/go"
 export PATH="$PATH:$GOPATH/bin"
+
+# haskell and ghcup
+export PATH="$PATH:$HOME/.ghcup/bin"
+
+# rust cargo
+export PATH="$PATH:$HOME/.cargo/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

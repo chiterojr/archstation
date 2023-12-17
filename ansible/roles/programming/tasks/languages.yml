@@ -17,10 +17,10 @@
   become: yes
   pacman: name=go
 
-- name: Install Node, NPM, and Yarn
-  become: yes
-  pacman:
-    name:
-      - nodejs
-      - npm
-      - yarn
+# - name: Install Node, NPM, and Yarn
+#   become: yes
+#   pacman:
+#     name:
+#       - nodejs
+#       - npm
+#       - yarn

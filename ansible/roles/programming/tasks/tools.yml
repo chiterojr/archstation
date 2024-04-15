@@ -29,3 +29,7 @@
 - name: Install PostgreSQL client and libs
   become: yes
   pacman: name=postgresql-libs
+
+- name: Install Dbeaver
+  become: yes
+  pacman: name=dbeaver

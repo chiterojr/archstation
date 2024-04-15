@@ -1,3 +1,9 @@
+- name: Install common tools
+  become: yes
+  pacman:
+    name:
+      - yq
+
 - name: Install Python PIP
   become: yes
   pacman: name=python-pip

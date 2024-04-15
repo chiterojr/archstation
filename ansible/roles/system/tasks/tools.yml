@@ -22,6 +22,27 @@
       - neofetch
       - rsync
       - tcpdump
+      - vim
+
+- name: Install graphic tools
+  become: yes
+  pacman:
+    name:
+      - xorg-xbacklight
+      - xorg-xrandr
+      - xorg-xrdb
+
+- name: Install network tools
+  become: yes
+  pacman:
+    name:
+      - wpa_supplicant
+
+- name: Install storage tools
+  become: yes
+  pacman:
+    name:
+      - hdparm
 
 - name: Install Terminator
   become: yes

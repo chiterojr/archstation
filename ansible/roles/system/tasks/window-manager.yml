@@ -5,6 +5,7 @@
       - xf86-input-libinput
       - xorg-server
       - xorg-xinit
+      - xorg-xinput
       - xorg-xprop
       - xorg-xwininfo
       - xorg-xrandr

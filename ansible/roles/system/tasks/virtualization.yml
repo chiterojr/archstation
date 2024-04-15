@@ -1,0 +1,11 @@
+- name: Install QEMU tools
+  become: yes
+  pacman:
+    name:
+      - qemu-base
+
+- name: Install TigerVNC
+  become: yes
+  pacman:
+    name:
+      - tigervnc

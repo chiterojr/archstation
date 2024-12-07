@@ -237,8 +237,8 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlp6s0
-interval = 3.0
+interface-type = wireless
+interval = 10.0
 
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1

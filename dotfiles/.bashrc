@@ -25,7 +25,7 @@ export PATH="$PATH:$HOME/dev/bin"
 export PATH="$PATH:$HOME/.npm-packages/bin"
 
 # configure golang
-export GOPATH="$HOME/dev/go"
+export GOPATH="$HOME/.golang"
 export PATH="$PATH:$GOPATH/bin"
 
 # haskell and ghcup

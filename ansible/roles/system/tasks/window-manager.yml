@@ -24,7 +24,6 @@
       - arandr
       - feh
       - i3lock
-      - light
       - scrot
 
 - name: Install PCMan

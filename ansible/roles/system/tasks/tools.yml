@@ -44,9 +44,9 @@
     name:
       - hdparm
 
-- name: Install Terminator
+- name: Install Alacritty Terminal
   become: yes
-  pacman: name=terminator
+  pacman: name=alacritty
 
 - name: Install common tools by yay
   yay:

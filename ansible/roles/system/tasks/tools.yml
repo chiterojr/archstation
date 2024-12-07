@@ -23,6 +23,7 @@
       - rsync
       - tcpdump
       - vim
+      - less
 
 - name: Install graphic tools
   become: yes

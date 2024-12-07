@@ -14,12 +14,9 @@ parse_git_branch() {
 }
 export PS1="\u@\h \[\033[32m\]\W\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-# loading personal script folder
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/dev/scripts"
-
-# loading personal bin filder
-export PATH="$PATH:$HOME/dev/bin"
+# configure personal binary directories
+export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:$HOME/bin/scripts"
 
 # globally (local) npm modules
 export PATH="$PATH:$HOME/.npm-packages/bin"

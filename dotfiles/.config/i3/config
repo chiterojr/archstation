@@ -196,6 +196,11 @@ for_window [class="Mousepad"] move to workspace $ws6 focus
 for_window [class="Slack"] move to workspace $ws7 focus
 
 ##################
+# APPAREANCE
+##################
+gaps inner 15
+
+##################
 # COLORS
 ##################
 # class                 border  backgr. text    indicator child_border

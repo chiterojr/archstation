@@ -14,6 +14,9 @@ parse_git_branch() {
 }
 export PS1="\u@\h \[\033[32m\]\W\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
+# for wayland
+export GDK_BACKEND=wayland
+
 # configure personal binary directories
 export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:$HOME/bin/scripts"

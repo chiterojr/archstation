@@ -1,0 +1,67 @@
+packages:
+  system:
+    - sway
+    - swaybg
+    - waybar --needed pipewire-jack
+    - alacritty
+    - fuzzel
+    - htop
+    - man-db
+    - brightnessctl
+    - grim
+  audio:
+    - pipewire
+    - pipewire-jack
+    - pipewire-pulse
+    - pavucontrol
+  media:
+    - mpv
+    - imv
+  fonts:
+    - ttf-dejavu
+    - ttf-fira-mono
+    - ttf-font-awesome
+    - noto-fonts
+    - noto-fonts-emoji
+    - noto-fonts-extra
+    - cantarell-fonts
+    - awesome-terminal-fonts
+    - adobe-source-code-pro-fonts
+  network:
+    - firefox --needed pipewire-jack
+    - google-chrome --yay
+    - qbittorrent
+    - openssh
+    - openvpn
+    - inetutils
+    - bind-tools
+    - nfs-utils
+    - ipcalc
+    - iw
+    - wpa_supplicant
+    - net-tools
+    - tcpdump
+  storage:
+    - filezilla
+    - unrar
+    - zip
+    - unzip
+    - hdparm
+    - pcmanfm-gtk3
+  programming:
+    - git
+    - less
+    - zed
+    - vim
+    - elixir
+    - rust
+    - go
+    - docker
+    - docker-compose
+    - postgresql-libs
+  office:
+    - libreoffice-still
+    - libreoffice-still-pt-br
+  virtualization:
+    - qemu-base
+    - tigervnc

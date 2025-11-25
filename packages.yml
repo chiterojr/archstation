@@ -1,0 +1,118 @@
+packages:
+  desktop-environment:
+    - sway
+    - swaybg
+    - waybar
+    - wdisplays --yay
+    - fuzzel
+    - alacritty
+    - pcmanfm-gtk3
+
+  screen-capture-tools:
+    - grim
+    - slurp
+
+  audio-system:
+    - pipewire
+    - pipewire-jack
+    - pipewire-pulse
+    - wireplumber
+    - pavucontrol
+
+  media-apps:
+    - mpv
+    - imv
+    - spotify-launcher
+
+  fonts:
+    - ttf-dejavu
+    - ttf-fira-mono
+    - ttf-font-awesome
+    - noto-fonts
+    - noto-fonts-emoji
+    - noto-fonts-extra
+    - cantarell-fonts
+    - awesome-terminal-fonts
+    - adobe-source-code-pro-fonts
+
+  networking:
+    - firefox --needed pipewire-jack
+    - google-chrome --yay
+    - qbittorrent
+    - openssh
+    - openvpn
+    - inetutils
+    - bind-tools
+    - nfs-utils
+    - ipcalc
+    - iw
+    - wpa_supplicant
+    - net-tools
+    - tcpdump
+
+  storage-tools:
+    - filezilla
+    - unrar
+    - zip
+    - unzip
+    - hdparm
+    - zfs-dkms-git --yay
+    - zfs-utils-git --yay
+
+  gaming:
+    - steam
+    - heroic-games-launcher-bin --yay
+    - sunshine --yay
+
+  programing-languages:
+    - bun-bin --yay
+    - elixir
+    - erlang-asn1
+    - erlang-public_key
+    - erlang-ssl
+    - go
+    - nushell
+    - rust
+    - zig
+
+  ides-and-editors:
+    - git
+    - zed
+    - helix
+    - go-yq
+    - insomnia --yay
+
+  databases:
+    - beekeeper-studio-bin --yay
+    - postgresql-libs
+
+  devops:
+    - act
+    - docker
+    - docker-compose
+    - k9s
+
+  office:
+    - libreoffice-still
+    - libreoffice-still-pt-br
+
+  virtualization:
+    - qemu-base
+    - tigervnc
+
+  system-tools:
+    - htop
+    - man-db
+    - brightnessctl
+    - less
+    - rsync
+    - xdg-desktop-portal
+    - xdg-desktop-portal-wlr
+    - libselinux --yay
+    - glow
+    - flatpak
+
+  hardware-info:
+    - dmidecode
+    - lshw
+    - inxi

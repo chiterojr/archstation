@@ -63,7 +63,8 @@ packages:
   gaming:
     - steam
     - heroic-games-launcher-bin --yay
-    - sunshine --yay
+    - sunshine-bin --yay
+    - moonlight-qt
 
   programing-languages:
     - bun-bin --yay

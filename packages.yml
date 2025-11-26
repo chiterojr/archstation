@@ -46,7 +46,8 @@ packages:
     - nfs-utils
     - ipcalc
     - iw
-    - wpa_supplicant
+    - iwd
+    - impala
     - net-tools
     - tcpdump
 

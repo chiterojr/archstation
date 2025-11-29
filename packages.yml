@@ -63,6 +63,8 @@ packages:
   gaming:
     - steam
     - heroic-games-launcher-bin --yay
+    - protonup-rs-bin --yay
+    - protontricks --yay
     - sunshine-bin --yay
     - moonlight-qt
 

@@ -103,6 +103,8 @@ packages:
   virtualization:
     - qemu-base
     - tigervnc
+    - incus
+    - incus-ui
 
   system-tools:
     - htop

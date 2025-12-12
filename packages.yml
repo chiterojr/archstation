@@ -67,6 +67,8 @@ packages:
     - protontricks --yay
     - sunshine-bin --yay
     - moonlight-qt
+    - usb_modeswitch
+    - joyutils
 
   programing-languages:
     - bun-bin --yay

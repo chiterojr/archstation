@@ -1,14 +1,30 @@
 packages:
-  system:
+  base:
+    - base
+    - base-devel
+    - linux-headers
+    - linux-firmware
+    - amd-ucode
+    - efibootmgr
+    - lvm2
+    - zfs-dkms-git --yay
+    - zfs-utils-git --yay
+    - zram-generator
+    - man-db
+  wayland:
     - sway
     - swaybg
     - waybar --needed pipewire-jack
     - alacritty
     - fuzzel
-    - htop
-    - man-db
-    - brightnessctl
+    - kanshi
     - grim
+    - slurp
+    - wlr-randr
+    - wdisplays
+    - xdg-desktop-portal-wlr
+    - xorg-xwayland
+    - brightnessctl
   audio:
     - pipewire
     - pipewire-jack
@@ -17,10 +33,14 @@ packages:
   media:
     - mpv
     - imv
+    - obs-studio
+    - imagemagick
+    - sunshine-bin --yay
   fonts:
     - ttf-dejavu
     - ttf-fira-mono
-    - ttf-font-awesome
+    - otf-font-awesome
+    - woff2-font-awesome
     - noto-fonts
     - noto-fonts-emoji
     - noto-fonts-extra
@@ -33,35 +53,100 @@ packages:
     - qbittorrent
     - openssh
     - openvpn
+    - tailscale
     - inetutils
-    - bind-tools
+    - bind
     - nfs-utils
     - ipcalc
     - iw
     - wpa_supplicant
     - net-tools
     - tcpdump
+    - traceroute
+    - wget
+    - rsync
+  terminal:
+    - nushell
+    - htop
+    - nnn
+    - yazi
+    - tree
+    - glow
+    - jq
+    - inxi
   storage:
     - filezilla
+    - rclone
+    - restic
     - unrar
     - zip
     - unzip
     - hdparm
-    - pcmanfm-gtk3
+    - pcmanfm
   programming:
     - git
+    - git-filter-repo
     - less
+    - helix
     - zed
     - vim
     - elixir
+    - erlang-asn1
+    - erlang-public_key
+    - erlang-ssl
+    - rebar3
+    - gleam
     - rust
     - go
+    - zig
+    - bun
+    - npm
+    - typescript-language-server
+    - python-pipx
+    - go-yq
+    - yamllint
     - docker
     - docker-compose
     - postgresql-libs
-  office:
+  databases:
+    - beekeeper-studio-bin --yay
+    - dbeaver
+    - insomnia --yay
+  cloud:
+    - incus
+    - incus-ui
+    - talosctl
+    - cloud-sql-proxy --yay
+    - k9s
+  ai:
+    - ollama
+    - ollama-rocm
+    - whisper.cpp-git --yay
+  gaming:
+    - steam
+    - heroic-games-launcher-bin --yay
+    - protontricks
+    - protonup-rs-bin --yay
+    - vulkan-radeon
+  apps:
+    - discord
+    - spotify-launcher
+    - foliate
     - libreoffice-still
     - libreoffice-still-pt-br
+    - antigravity-bin --yay
+  hardware:
+    - lshw
+    - dmidecode
+    - cpu-x
+    - mbw --yay
+    - radeontop-git --yay
+    - libselinux --yay
+    - usb_modeswitch
+    - joyutils
   virtualization:
     - qemu-base
     - tigervnc
+  aur_helpers:
+    - paru-bin --yay
+    - yay --yay

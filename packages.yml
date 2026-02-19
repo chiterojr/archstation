@@ -7,8 +7,8 @@ packages:
     - amd-ucode
     - efibootmgr
     - lvm2
-    - zfs-dkms-git --yay
-    - zfs-utils-git --yay
+    - zfs-dkms-git --aur
+    - zfs-utils-git --aur
     - zram-generator
     - man-db
   wayland:
@@ -35,7 +35,7 @@ packages:
     - imv
     - obs-studio
     - imagemagick
-    - sunshine-bin --yay
+    - sunshine-bin --aur
   fonts:
     - ttf-dejavu
     - ttf-fira-mono
@@ -49,7 +49,7 @@ packages:
     - adobe-source-code-pro-fonts
   network:
     - firefox --needed pipewire-jack
-    - google-chrome --yay
+    - google-chrome --aur
     - qbittorrent
     - openssh
     - openvpn
@@ -109,24 +109,24 @@ packages:
     - docker-compose
     - postgresql-libs
   databases:
-    - beekeeper-studio-bin --yay
+    - beekeeper-studio-bin --aur
     - dbeaver
-    - insomnia --yay
+    - insomnia --aur
   cloud:
     - incus
     - incus-ui
     - talosctl
-    - cloud-sql-proxy --yay
+    - cloud-sql-proxy --aur
     - k9s
   ai:
     - ollama
     - ollama-rocm
-    - whisper.cpp-git --yay
+    - whisper.cpp-git --aur
   gaming:
     - steam
-    - heroic-games-launcher-bin --yay
+    - heroic-games-launcher-bin --aur
     - protontricks
-    - protonup-rs-bin --yay
+    - protonup-rs-bin --aur
     - vulkan-radeon
   apps:
     - discord
@@ -134,19 +134,19 @@ packages:
     - foliate
     - libreoffice-still
     - libreoffice-still-pt-br
-    - antigravity-bin --yay
+    - antigravity-bin --aur
   hardware:
     - lshw
     - dmidecode
     - cpu-x
-    - mbw --yay
-    - radeontop-git --yay
-    - libselinux --yay
+    - mbw --aur
+    - radeontop-git --aur
+    - libselinux --aur
     - usb_modeswitch
     - joyutils
   virtualization:
     - qemu-base
     - tigervnc
   aur_helpers:
-    - paru-bin --yay
-    - yay --yay
+    - paru-bin --aur
+    - yay --aur

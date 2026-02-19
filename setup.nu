@@ -1,113 +1,111 @@
-def mk-task [name, executor] {
-  { name: $name, executor: $executor }
-}
+#!/usr/bin/env nu
 
-def mk-exec-result [cmd: string, status: string, completed] {
-  {
-    cmd: $cmd,
-    status: ($status | match $in {
-      skipped => $"(ansi yellow)skipped(ansi reset)",
-      executed => $"(ansi green)executed(ansi reset)",
-      failed => $"(ansi red)failed(ansi reset)"
-    }),
-    exit_code: $completed.exit_code,
-    stderr: $completed.stderr,
+use lib
+use tasks
+
+def dispatch [task_type: string, task_config: record] {
+  match $task_type {
+    "install_pkg" => (tasks install_pkg generate $task_config),
+    "copy_dotfile" => (tasks copy_dotfile generate $task_config),
+    "enable_service" => (tasks enable_service generate $task_config),
+    "add_user_to_group" => (tasks add_user_to_group generate $task_config),
+    _ => {
+      print $"(ansi red)unknown task type: ($task_type)(ansi reset)"
+      []
+    }
   }
 }
 
-# generate symlinks for dotfiles
-let dotfiles_tasks = (
-  ls ...(glob dotfiles/**/*) |
-  where type == file |
-  get name |
-  sort |
-  uniq |
-  each { | fpath |
-    let taskexecutor = {
-      let replacepath = $"($env.PWD)/dotfiles"
-      let dest_file_path = $fpath | str replace $replacepath $env.HOME
-      let dest_dir_path = $dest_file_path | path split | first (($in | length) - 1) | path join
-
-      # dependency commands
-      run-external mkdir "-p" $"($dest_dir_path)" $"($dest_file_path)" | complete
-      run-external rm "-rf" $"($dest_file_path)" | complete
-
-      let cmd_args = ["-s" $"($fpath)" $"($dest_file_path)"]
-      run-external ln ...$cmd_args | complete | match $in.exit_code {
-        0 => (mk-exec-result $"ln ($cmd_args | str join ' ')" executed $in)
-      }
+def dispatch-check [task_type: string, task_config: record] {
+  match $task_type {
+    "install_pkg" => (tasks install_pkg check $task_config),
+    "copy_dotfile" => (tasks copy_dotfile check $task_config),
+    "enable_service" => (tasks enable_service check $task_config),
+    "add_user_to_group" => (tasks add_user_to_group check $task_config),
+    _ => {
+      print $"(ansi red)unknown task type: ($task_type)(ansi reset)"
+      []
     }
-
-    mk-task "symlink a dotfile" $taskexecutor
   }
-)
+}
 
-# install packages
-let install_packages_tasks = (
-  open packages.yml |
-  get packages |
-  values |
-  flatten |
-  each { |item|
-    let taskexecutor = {
-      let pkg_kit = match $item {
-        [$pkg] => ($pkg | split row ' ' | { name: $in.0, needed: $in.1 }),
-        $name => { name: $name, needed: nothing }
-      }
+def "main up" [] {
+  let config = open config.yml
 
-      # let pkg_kit = match $item {
-      #     [$name "" ]
-      # }
+  let all_tasks = $config.tasks | items { |task_type, task_config|
+    print $"(ansi cyan_bold)--- ($task_type) ---(ansi reset)"
+    dispatch $task_type $task_config
+  } | flatten
 
-      let full_cmd = match $pkg_kit.needed {
-        nothing => [pacman '-S' '--noconfirm' $"($pkg_kit.name)"]
-        _ => [pacman '-S' '--noconfirm' $"($pkg_kit.name)" '--needed' $"($pkg_kit.needed)"]
-      }
-      let full_text_cmd = $full_cmd | str join ' '
+  print ""
+  print $"(ansi cyan_bold)--- execution ---(ansi reset)"
+  lib runner run-tasks $all_tasks
+}
 
-      let pkg_check = run-external pacman '-Q' $pkg_kit.name | complete
-      if $pkg_check.exit_code == 0 {
-        mk-exec-result $"sudo ($full_text_cmd)" skipped $pkg_check
-      } else {
-        let pkg_install = run-external sudo ...$full_cmd | complete
+def "main preview" [] {
+  let config = open config.yml
 
-        if $pkg_install.exit_code == 0 {
-          mk-exec-result $"sudo ($full_text_cmd)" executed $pkg_install
-        } else {
-          mk-exec-result $"sudo ($full_text_cmd) ($pkg_install.stderr | str trim)" failed $pkg_install
-        }
-      }
-    }
+  let all_tasks = $config.tasks | items { |task_type, task_config|
+    dispatch $task_type $task_config
+  } | flatten
 
-    mk-task "install pacman package" $taskexecutor
-  } |
-  prepend (mk-task "update pacman list" {
-    let pacman_update = run-external sudo pacman "-Sy" | complete
+  $all_tasks | select task_type label | table
+}
 
-    if $pacman_update.exit_code == 0 {
-      mk-exec-result 'sudo pacman -Sy' executed $pacman_update
-    } else {
-      mk-exec-result $"sudo pacman -Sy ($pacman_update.stderr | str trim)" failed $pacman_update
-    }
-  })
-)
-
-# TODO tasks
-# - add user to docker group
-# - pt_BR locale
-# - gsettings set org.gnome.desktop.interface gtk-theme Arc-Dark
-
-[
-  #$dotfiles_tasks
-  $install_packages_tasks
-] | flatten | each while { |task|
-  let result = (do $task.executor)
-
-  if $result.status != failed {
-    $result
+def colorize-check [status: string] {
+  match $status {
+    "ok" => $"(ansi green)($status)(ansi reset)",
+    "missing" => $"(ansi red)($status)(ansi reset)",
+    "differs" => $"(ansi yellow)($status)(ansi reset)",
+    "disabled" => $"(ansi red)($status)(ansi reset)",
+    _ => $"(ansi yellow)($status)(ansi reset)",
   }
-  # do $task.executor | match $in.status {
-  #   failed => (exit 1),
-  #   _ => $in
-  # }
+}
+
+def "main status" [] {
+  let config = open config.yml
+
+  let raw = $config.tasks | items { |task_type, task_config|
+    dispatch-check $task_type $task_config
+  } | flatten
+
+  let display = $raw | each { |r|
+    { label: $r.label, status: (colorize-check $r.status), detail: $r.detail }
+  }
+
+  print ($display | table --expand --width 120)
+
+  let ok_count = $raw | where status == "ok" | length
+  let total = $raw | length
+  let pending = $total - $ok_count
+  print ""
+  print $"(ansi cyan_bold)($ok_count)/($total) ok, ($pending) pending(ansi reset)"
+}
+
+def main [] {
+  print $"(ansi cyan_bold)archstation(ansi reset) - Arch Linux workstation orchestrator"
+  print ""
+  print "Usage: nu setup.nu <command>"
+  print ""
+  print $"(ansi cyan_bold)Commands:(ansi reset)"
+  print "  up         Execute all tasks defined in config.yml"
+  print "  preview    Show what would run without executing (dry-run)"
+  print "  status     Check current state of all tasks (read-only)"
+  print ""
+  print $"(ansi cyan_bold)Task types:(ansi reset)"
+  print "  install_pkg        Install packages via pacman or AUR helper (paru/yay)"
+  print "  copy_dotfile       Copy dotfiles from dotfiles/ to ~/"
+  print "  enable_service     Enable and start systemd services"
+  print "  add_user_to_group  Add current user to system groups"
+  print ""
+  print $"(ansi cyan_bold)Configuration:(ansi reset)"
+  print "  config.yml         Defines which tasks to run and their settings"
+  print "  packages.yml       Package list (--aur for AUR, --needed for deps)"
+  print "  dotfiles/          Directory structure mirroring ~/"
+  print ""
+  print $"(ansi cyan_bold)Execution contract:(ansi reset)"
+  print $"  Every task returns one of:"
+  print $"    (ansi green)executed(ansi reset)  - action was performed successfully"
+  print $"    (ansi yellow)skipped(ansi reset)   - already in desired state"
+  print $"    (ansi red)failed(ansi reset)    - error occurred, execution stops \(fail-fast\)"
 }

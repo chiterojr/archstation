@@ -29,6 +29,43 @@ def dispatch-check [task_type: string, task_config: record] {
   }
 }
 
+# TODO: dispatch, dispatch-check, and dispatch-ingest share the same static match
+# pattern. If more operations are added, consider refactoring into a single dynamic
+# dispatch mechanism (e.g. a record-based registry per task module).
+def dispatch-ingest [task_type: string, task_config: record] {
+  match $task_type {
+    "install_pkg" => (tasks install_pkg ingest $task_config),
+    "copy_dotfile" => (tasks copy_dotfile ingest $task_config),
+    _ => {
+      # Not all tasks support ingest (enable_service, add_user_to_group are intentionally excluded)
+      null
+    }
+  }
+}
+
+def "main ingest" [] {
+  let config = open config.yml
+
+  print $"(ansi cyan_bold)archstation ingest(ansi reset) - absorb system changes back into the repo"
+  print ""
+
+  let separator = 1..60 | each { "=" } | str join
+
+  $config.tasks | items { |task_type, task_config|
+    print ""
+    print $"(ansi cyan_bold)($separator)(ansi reset)"
+    print $"(ansi cyan_bold)  INGEST: ($task_type)(ansi reset)"
+    print $"(ansi cyan_bold)($separator)(ansi reset)"
+    print ""
+    dispatch-ingest $task_type $task_config
+  }
+
+  print ""
+  print $"(ansi cyan_bold)($separator)(ansi reset)"
+  print $"(ansi green)  Ingest complete.(ansi reset)"
+  print $"(ansi cyan_bold)($separator)(ansi reset)"
+}
+
 def "main up" [] {
   let config = open config.yml
 
@@ -91,6 +128,7 @@ def main [] {
   print "  up         Execute all tasks defined in config.yml"
   print "  preview    Show what would run without executing (dry-run)"
   print "  status     Check current state of all tasks (read-only)"
+  print "  ingest     Absorb system changes back into the repo"
   print ""
   print $"(ansi cyan_bold)Task types:(ansi reset)"
   print "  install_pkg        Install packages via pacman or AUR helper (paru/yay)"

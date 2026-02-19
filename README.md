@@ -1,62 +1,48 @@
-# Intro
+# archstation
 
-A project that sets up my Arch Linux workstation.
+Personal Arch Linux workstation orchestrator written in Nushell.
 
-## Notes
+A minimal, opinionated task runner that automates system setup: installing packages, deploying dotfiles, enabling services, and configuring user groups. Designed for personal use as a simpler alternative to Ansible.
 
-Just ramdom notes that need to be better structured elsewhere.
-
-### Locale
-
-To use US keyboard with Intl variant and ç on dead acute, its necessary to
-install pt_BR.UTF-8 locale and set it in /etc/locale.conf.
-
-A working keyboard xorg config:
-
-```conf
-Section "InputClass"
-        Identifier "system-keyboard"
-        MatchIsKeyboard "on"
-        Option "XkbLayout" "us,us,br"
-        # Option "XkbModel" "pc105+inet"
-        # Option "XkbOptions" "terminate:ctrl_alt_bksp"
-        Option "XkbOptions" "grp:alt_shift_toggle"
-        Option "XkbVariant" ",intl,"
-EndSection
-```
-
-Probably the command to generate the result above:
-
-```bash
-localectl --no-convert set-x11-keymap us,us,br pc104 ,intl, grp:alt_shift_toggle
-```
-
-## Manual Changes
-
-Configure the correct wlan interface in the dotfiles/.config/polybar/config file:
-
-```
-[module/wlan]
-type = internal/network
-interface = wlp60s0
-```
-
-Configure the correct battery interface in the dotfiles/.config/polybar/config file:
-
-```
-[module/battery]
-type = internal/battery
-battery = BAT0
-```
-
-Properly configure the video card:
-https://wiki.archlinux.org/index.php/NVIDIA_Optimus
-
-## Nushell
-
-To test the new Nushell kit to replace Ansible:
+## Usage
 
 ```nu
-docker build -t archstation-nushell . ;                                                                                                                                                                    11/12/2024 11:29:16
-  docker run --rm -ti --user 1000:1000 -w /home/junior --hostname archstation-nushell -v $"($env.PWD):/home/junior/archstation" archstation-nushell
+nu setup.nu            # show help
+nu setup.nu up         # execute all tasks
+nu setup.nu preview    # dry-run, show what would run
+nu setup.nu status     # check current state (read-only)
 ```
+
+## Structure
+
+```
+setup.nu          Main orchestrator entry point
+config.yml        Defines which tasks to run and their settings
+packages.yml      Package list organized by category
+dotfiles/         Config files mirroring ~/ structure
+lib/              Core library (types, runner)
+tasks/            Task modules (one per task type)
+```
+
+## Task types
+
+| Task | Description |
+|------|-------------|
+| `install_pkg` | Install packages via pacman or AUR helper (paru/yay) |
+| `copy_dotfile` | Copy dotfiles from `dotfiles/` to `~/` with safety checks |
+| `enable_service` | Enable and start systemd services |
+| `add_user_to_group` | Add current user to system groups |
+
+## How it works
+
+Every task follows the same execution contract and returns one of three statuses:
+- **executed** - action was performed successfully
+- **skipped** - already in desired state, nothing to do
+- **failed** - error occurred, execution stops immediately (fail-fast)
+
+Tasks are configured in `config.yml` and executed in the order they appear. Adding a new task type requires creating a module in `tasks/` and registering it in `setup.nu`.
+
+## packages.yml flags
+
+- `--aur` - install via AUR helper instead of pacman
+- `--needed <dep>` - pass additional dependency to pacman

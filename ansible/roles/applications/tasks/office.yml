@@ -1,6 +1,0 @@
-- name: Install LibreOffice
-  become: yes
-  pacman:
-    name:
-      - libreoffice-still
-      - libreoffice-still-pt-br

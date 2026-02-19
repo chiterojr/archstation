@@ -1,2 +1,0 @@
-- systemctl start docker
-- add my user to docker group

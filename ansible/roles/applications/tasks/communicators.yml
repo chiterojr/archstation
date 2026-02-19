@@ -1,2 +1,0 @@
-- name: Install Slack
-  yay: name=slack-desktop

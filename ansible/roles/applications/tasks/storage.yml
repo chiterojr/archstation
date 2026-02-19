@@ -1,3 +1,0 @@
-- name: Install filezilla
-  become: yes
-  pacman: name=filezilla

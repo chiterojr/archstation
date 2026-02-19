@@ -150,3 +150,6 @@ packages:
   aur_helpers:
     - paru-bin --aur
     - yay --aur
+
+  ingested:
+    - flatpak

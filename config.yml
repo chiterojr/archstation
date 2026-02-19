@@ -1,0 +1,16 @@
+tasks:
+  install_pkg:
+    source: packages.yml
+    aur_helper: paru
+    aur_fallback: yay
+  copy_dotfile:
+    source_dir: dotfiles
+    dest_dir: "~"
+  enable_service:
+    services:
+      - docker
+      - tailscaled
+      - ollama
+  add_user_to_group:
+    groups:
+      - docker

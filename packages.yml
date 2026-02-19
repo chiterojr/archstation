@@ -1,0 +1,152 @@
+packages:
+  base:
+    - base
+    - base-devel
+    - linux-headers
+    - linux-firmware
+    - amd-ucode
+    - efibootmgr
+    - lvm2
+    - zfs-dkms-git --aur
+    - zfs-utils-git --aur
+    - zram-generator
+    - man-db
+  wayland:
+    - sway
+    - swaybg
+    - waybar --needed pipewire-jack
+    - alacritty
+    - fuzzel
+    - kanshi
+    - grim
+    - slurp
+    - wlr-randr
+    - wdisplays
+    - xdg-desktop-portal-wlr
+    - xorg-xwayland
+    - brightnessctl
+  audio:
+    - pipewire
+    - pipewire-jack
+    - pipewire-pulse
+    - pavucontrol
+  media:
+    - mpv
+    - imv
+    - obs-studio
+    - imagemagick
+    - sunshine-bin --aur
+  fonts:
+    - ttf-dejavu
+    - ttf-fira-mono
+    - otf-font-awesome
+    - woff2-font-awesome
+    - noto-fonts
+    - noto-fonts-emoji
+    - noto-fonts-extra
+    - cantarell-fonts
+    - awesome-terminal-fonts
+    - adobe-source-code-pro-fonts
+  network:
+    - firefox --needed pipewire-jack
+    - google-chrome --aur
+    - qbittorrent
+    - openssh
+    - openvpn
+    - tailscale
+    - inetutils
+    - bind
+    - nfs-utils
+    - ipcalc
+    - iw
+    - wpa_supplicant
+    - net-tools
+    - tcpdump
+    - traceroute
+    - wget
+    - rsync
+  terminal:
+    - nushell
+    - htop
+    - nnn
+    - yazi
+    - tree
+    - glow
+    - jq
+    - inxi
+  storage:
+    - filezilla
+    - rclone
+    - restic
+    - unrar
+    - zip
+    - unzip
+    - hdparm
+    - pcmanfm
+  programming:
+    - git
+    - git-filter-repo
+    - less
+    - helix
+    - zed
+    - vim
+    - elixir
+    - erlang-asn1
+    - erlang-public_key
+    - erlang-ssl
+    - rebar3
+    - gleam
+    - rust
+    - go
+    - zig
+    - bun
+    - npm
+    - typescript-language-server
+    - python-pipx
+    - go-yq
+    - yamllint
+    - docker
+    - docker-compose
+    - postgresql-libs
+  databases:
+    - beekeeper-studio-bin --aur
+    - dbeaver
+    - insomnia --aur
+  cloud:
+    - incus
+    - incus-ui
+    - talosctl
+    - cloud-sql-proxy --aur
+    - k9s
+  ai:
+    - ollama
+    - ollama-rocm
+    - whisper.cpp-git --aur
+  gaming:
+    - steam
+    - heroic-games-launcher-bin --aur
+    - protontricks
+    - protonup-rs-bin --aur
+    - vulkan-radeon
+  apps:
+    - discord
+    - spotify-launcher
+    - foliate
+    - libreoffice-still
+    - libreoffice-still-pt-br
+    - antigravity-bin --aur
+  hardware:
+    - lshw
+    - dmidecode
+    - cpu-x
+    - mbw --aur
+    - radeontop-git --aur
+    - libselinux --aur
+    - usb_modeswitch
+    - joyutils
+  virtualization:
+    - qemu-base
+    - tigervnc
+  aur_helpers:
+    - paru-bin --aur
+    - yay --aur

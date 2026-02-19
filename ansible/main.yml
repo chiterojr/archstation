@@ -1,6 +1,0 @@
-- hosts: localhost
-  roles:
-    - system
-    - programming
-    - applications
-

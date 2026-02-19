@@ -1,3 +1,0 @@
-- include_tasks: ides.yml
-- include_tasks: languages.yml
-- include_tasks: tools.yml

@@ -1,8 +1,0 @@
-- name: Install audio tools
-  become: yes
-  pacman:
-    name:
-      - alsa-utils
-      - pulseaudio
-      - pulseaudio-alsa
-      - pavucontrol

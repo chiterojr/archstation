@@ -1,7 +1,0 @@
-- name: Install VSCode
-  become: yes
-  pacman: name=code
-
-# - name: Install intellij IDEA community
-#   become: yes
-#   pacman: name=intellij-idea-community-edition

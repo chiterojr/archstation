@@ -1,0 +1,61 @@
+{
+  "layer": "bottom",
+  "height": 44,
+  "position": "top",
+  "modules-left": ["custom/hostname", "sway/workspaces", "sway/mode"],
+  "modules-center": ["sway/window"],
+  "modules-right": ["sway/language", "pulseaudio", "disk", "cpu", "memory", "network", "clock"],
+  "sway/window": {
+    "max-length": 50
+  },
+  "custom/hostname": {
+    "format": "  {}",
+    "exec": "hostname",
+    "interval": "600"
+  },
+  "sway/language": {
+    "format": "{short} {variant}  ",
+    "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+  },
+  "backlight/slider": {
+      "min": 0,
+      "max": 100,
+      "orientation": "horizontal"
+  },
+  "pulseaudio": {
+    "format": "{volume}%  {icon}",
+    "format-icons": {
+      "default": ["", ""],
+      "headphone": ""
+    },
+    "on-click": "pavucontrol"
+  },
+  "disk": {
+    "interval": 30,
+    "format": "{path}: {percentage_used}%  ",
+    "path": "/"
+  },
+  "cpu": {
+    "interval": 10,
+    "format": "{}%  ",
+    "max-length": 10
+  },
+  "memory": {
+    "interval": 30,
+    "format": "{used:0.1f}G/{total:0.1f}G  "
+  },
+  "network": {
+    "format": "{ifname}",
+    "format-ethernet": "{ipaddr}/{cidr}  ",
+    "format-disconnected": "N/A", //An empty format will hide the module.
+    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname} ",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50
+  },
+  "clock": {
+    "format": "{:%H:%M}  ",
+    "format-alt": "{:%a, %d. %b  %H:%M}  "
+  }
+}

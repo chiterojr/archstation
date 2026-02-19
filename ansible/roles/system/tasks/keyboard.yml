@@ -1,5 +1,0 @@
-- name: Toogle Caps into escape
-  become: yes
-  shell: |
-    localectl --no-convert --no-ask-password set-x11-keymap br abnt2 "" caps:swapescape
-

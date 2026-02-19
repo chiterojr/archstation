@@ -1,3 +1,9 @@
 [user]
 	email = cchitero.jr@gmail.com
 	name = Celso Chitero Junior
+
+[include]
+	path = ~/dev/.gitconfig
+	optional = true
+[core]
+	editor = helix

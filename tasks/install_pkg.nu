@@ -56,6 +56,58 @@ export def generate [config: record] {
   [$sync_task] | append $pkg_tasks
 }
 
+export def ingest [config: record] {
+  let source_file = $config.source
+
+  # Collect all packages declared in packages.yml (across all categories)
+  let managed = open $source_file
+    | get packages
+    | values
+    | flatten
+    | each { |entry| $entry | split row ' ' | first }
+
+  # Get explicitly installed packages from the system
+  let installed = ^pacman -Qe
+    | lines
+    | each { |line| $line | split row ' ' | first }
+
+  # Find orphan packages: installed but not managed by archstation
+  let orphans = $installed | where { |pkg| $pkg not-in $managed }
+
+  if ($orphans | is-empty) {
+    print $"(ansi green)No orphan packages found. Everything is tracked.(ansi reset)"
+    return
+  }
+
+  print $"(ansi cyan_bold)Found ($orphans | length) orphan packages \(installed but not in ($source_file)\):(ansi reset)"
+  print ""
+
+  let selected = $orphans | input list --multi "Select packages to ingest (SPACE to toggle, ENTER to confirm): "
+
+  if ($selected | is-empty) {
+    print $"(ansi yellow)Nothing selected, skipping.(ansi reset)"
+    return
+  }
+
+  # Append to packages.yml as a textual block to preserve existing formatting/comments
+  let entries = $selected | each { |pkg| $"    - ($pkg)" } | str join "\n"
+  let block = $"\n  ingested:\n($entries)\n"
+
+  # Check if an ingested section already exists
+  let raw = open --raw $source_file
+  if ($raw | str contains "  ingested:") {
+    # Append entries under the existing ingested section
+    let new_entries = $selected | each { |pkg| $"\n    - ($pkg)" } | str join ""
+    $raw + $new_entries | save --force $source_file
+  } else {
+    $raw + $block | save --force $source_file
+  }
+
+  print ""
+  print $"(ansi green)Ingested ($selected | length) packages into ($source_file) \(ingested section\)(ansi reset)"
+  $selected | each { |pkg| print $"  + ($pkg)" }
+}
+
 export def check [config: record] {
   open $config.source
   | get packages

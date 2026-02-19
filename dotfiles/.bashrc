@@ -37,3 +37,20 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# bun user "global"
+export PATH="/home/junior/.bun/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/zfs_home/bin/google-cloud-sdk/path.bash.inc' ]; then . '/zfs_home/bin/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/zfs_home/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/zfs_home/bin/google-cloud-sdk/completion.bash.inc'; fi
+
+
+
+[ -f "$HOME/dev/.bashrc-extension" ] && source "$HOME/dev/.bashrc-extension"
+
+
+# Created by `pipx` on 2025-12-17 15:43:42
+export PATH="$PATH:/home/junior/.local/bin"

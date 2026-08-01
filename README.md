@@ -148,7 +148,7 @@ Detects orphan packages (installed via `pacman -Qe` but not in `packages.yml`). 
 
 ### copy_dotfile
 
-Finds managed dotfiles where the system copy differs from the repo. For each divergent file, shows a unified diff and offers three choices: update the repo, skip, or view the full diff before deciding.
+Finds managed dotfiles where the system copy differs from the repo. For each divergent file, shows a unified diff and offers choices to update the repo, skip, view the full diff, or skip all remaining files.
 
 ### Tasks without ingest
 

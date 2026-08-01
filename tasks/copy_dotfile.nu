@@ -64,8 +64,13 @@ export def ingest [config: record] {
   print ""
 
   mut ingested_count = 0
+  mut skip_all = false
 
   for entry in $diverged {
+    if $skip_all {
+      break
+    }
+
     print $"(ansi cyan_bold)dotfile: ($entry.rel_path)(ansi reset)"
     print ""
 
@@ -74,7 +79,7 @@ export def ingest [config: record] {
     print $diff_result.stdout
     print ""
 
-    let choice = ["update repo" "skip" "diff full"] | input list $"Action for ($entry.rel_path): "
+    let choice = ["update repo" "skip" "diff full" "skip all"] | input list $"Action for ($entry.rel_path): "
 
     match $choice {
       "update repo" => {
@@ -86,14 +91,25 @@ export def ingest [config: record] {
         let full_diff = ^diff --color=always $entry.src_path $entry.dest_path | complete
         print $full_diff.stdout
 
-        let confirm = ["update repo" "skip"] | input list $"Action for ($entry.rel_path): "
-        if $confirm == "update repo" {
-          cp $entry.dest_path $entry.src_path
-          print $"(ansi green)  Updated repo: ($entry.rel_path)(ansi reset)"
-          $ingested_count = $ingested_count + 1
-        } else {
-          print $"(ansi yellow)  Skipped(ansi reset)"
+        let confirm = ["update repo" "skip" "skip all"] | input list $"Action for ($entry.rel_path): "
+        match $confirm {
+          "update repo" => {
+            cp $entry.dest_path $entry.src_path
+            print $"(ansi green)  Updated repo: ($entry.rel_path)(ansi reset)"
+            $ingested_count = $ingested_count + 1
+          },
+          "skip all" => {
+            print $"(ansi yellow)  Skipped; stopping remaining files(ansi reset)"
+            $skip_all = true
+          },
+          _ => {
+            print $"(ansi yellow)  Skipped(ansi reset)"
+          }
         }
+      },
+      "skip all" => {
+        print $"(ansi yellow)  Skipped; stopping remaining files(ansi reset)"
+        $skip_all = true
       },
       _ => {
         print $"(ansi yellow)  Skipped(ansi reset)"

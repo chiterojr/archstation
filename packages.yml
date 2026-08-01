@@ -153,3 +153,11 @@ packages:
 
   ingested:
     - flatpak
+    - gh-dash --aur
+    - zellij
+    - act
+    - infisical-bin --aur
+    - kubie
+    - pandoc-bin --aur
+    - typst
+    - whois

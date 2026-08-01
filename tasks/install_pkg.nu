@@ -71,6 +71,13 @@ export def ingest [config: record] {
     | lines
     | each { |line| $line | split row ' ' | first }
 
+  # Packages not found in the configured sync databases are usually AUR
+  # packages. Keep this separate from `installed`: `pacman -Qe` alone does
+  # not expose the package origin.
+  let foreign = ^pacman -Qm
+    | lines
+    | each { |line| $line | split row ' ' | first }
+
   # Find orphan packages: installed but not managed by archstation
   let orphans = $installed | where { |pkg| $pkg not-in $managed }
 
@@ -90,15 +97,23 @@ export def ingest [config: record] {
   }
 
   # Append to packages.yml as a textual block to preserve existing formatting/comments
-  let entries = $selected | each { |pkg| $"    - ($pkg)" } | str join "\n"
+  # and retain the AUR flag for foreign packages.
+  let entries = $selected | each { |pkg|
+    let aur_flag = if ($pkg in $foreign) { " --aur" } else { "" }
+    $"    - ($pkg)($aur_flag)"
+  } | str join "\n"
   let block = $"\n  ingested:\n($entries)\n"
 
   # Check if an ingested section already exists
   let raw = open --raw $source_file
   if ($raw | str contains "  ingested:") {
     # Append entries under the existing ingested section
-    let new_entries = $selected | each { |pkg| $"\n    - ($pkg)" } | str join ""
-    $raw + $new_entries | save --force $source_file
+    let entry_lines = $selected | each { |pkg|
+      let aur_flag = if ($pkg in $foreign) { " --aur" } else { "" }
+      $"    - ($pkg)($aur_flag)"
+    } | str join "\n"
+    let separator = if ($raw | str ends-with "\n") { "" } else { "\n" }
+    $raw + $separator + $entry_lines + "\n" | save --force $source_file
   } else {
     $raw + $block | save --force $source_file
   }

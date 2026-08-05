@@ -5,6 +5,7 @@ use tasks
 
 def dispatch [task_type: string, task_config: record] {
   match $task_type {
+    "enable_multilib" => (tasks enable_multilib generate $task_config),
     "bootstrap_aur" => (tasks bootstrap_aur generate $task_config),
     "install_pkg" => (tasks install_pkg generate $task_config),
     "copy_dotfile" => (tasks copy_dotfile generate $task_config),
@@ -19,6 +20,7 @@ def dispatch [task_type: string, task_config: record] {
 
 def dispatch-check [task_type: string, task_config: record] {
   match $task_type {
+    "enable_multilib" => (tasks enable_multilib check $task_config),
     "bootstrap_aur" => (tasks bootstrap_aur check $task_config),
     "install_pkg" => (tasks install_pkg check $task_config),
     "copy_dotfile" => (tasks copy_dotfile check $task_config),
@@ -143,6 +145,7 @@ def main [] {
   print ""
   print $"(ansi cyan_bold)Task types:(ansi reset)"
   print "  bootstrap_aur      Bootstrap the AUR helper (yay)"
+  print "  enable_multilib    Enable the multilib repository"
   print "  install_pkg        Install packages via pacman or AUR helper (yay)"
   print "  copy_dotfile       Copy dotfiles from dotfiles/ to ~/"
   print "  enable_service     Enable and start systemd services"

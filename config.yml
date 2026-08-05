@@ -1,4 +1,6 @@
 tasks:
+  enable_multilib:
+    pacman_conf: /etc/pacman.conf
   bootstrap_aur:
     aur_helper: yay
     aur_helper_package: yay

@@ -27,6 +27,7 @@ lib/
   runner.nu           Sequential task executor with fail-fast
 tasks/
   bootstrap_aur.nu     AUR helper bootstrap (yay)
+  enable_multilib.nu   Enable the multilib repository
   install_pkg.nu      Package installation (pacman + AUR)
   copy_dotfile.nu     Dotfile deployment with hash-based safety
   enable_service.nu   Systemd service activation
@@ -92,6 +93,8 @@ Status is one of:
 
 ```yaml
 tasks:
+  enable_multilib:
+    pacman_conf: /etc/pacman.conf
   bootstrap_aur:
     aur_helper: yay            # primary helper to bootstrap first
     aur_helper_package: yay
@@ -126,6 +129,12 @@ packages:
 Flags:
 - `--aur` - install via AUR helper instead of pacman
 - `--needed <dep>` - pass additional dependency to pacman
+
+### enable_multilib
+
+Ensures the `multilib` repository is enabled in `/etc/pacman.conf` before
+package installation. This is required by packages such as Steam and is
+idempotent.
 
 ### bootstrap_aur
 

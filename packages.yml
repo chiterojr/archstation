@@ -152,3 +152,9 @@ packages:
 
   ingested:
     - flatpak
+
+    - act
+    - kubie
+    - pandoc-bin
+    - whois
+    - zellij

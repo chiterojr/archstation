@@ -58,7 +58,7 @@ def enable [config_path: string] {
   mk-result $task_type $task_label "executed" "[multilib] habilitado"
 }
 
-def run [config: record] {
+def execute-task [config: record] {
   let config_path = $config.pacman_conf
 
   if (enabled $config_path) {
@@ -69,7 +69,7 @@ def run [config: record] {
 }
 
 export def generate [config: record] {
-  [(mk-task $task_type $task_label { run $config })]
+  [(mk-task $task_type $task_label { execute-task $config })]
 }
 
 export def check [config: record] {

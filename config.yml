@@ -10,6 +10,8 @@ tasks:
   copy_dotfile:
     source_dir: dotfiles
     dest_dir: "~"
+    overwrite: true
+    backup_dir: "~/.local/state/archstation/backups"
   enable_service:
     services:
       - docker

@@ -7,7 +7,7 @@ packages:
     - amd-ucode
     - efibootmgr
     - lvm2
-    - zfs-dkms-git --aur
+    # - zfs-dkms-git --aur
     - zfs-utils-git --aur
     - zram-generator
     - man-db
@@ -134,7 +134,7 @@ packages:
     - foliate
     - libreoffice-still
     - libreoffice-still-pt-br
-    - antigravity-bin --aur
+    # - antigravity-bin --aur
   hardware:
     - lshw
     - dmidecode

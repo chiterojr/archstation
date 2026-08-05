@@ -104,6 +104,8 @@ tasks:
   copy_dotfile:
     source_dir: dotfiles       # repo directory with dotfiles
     dest_dir: "~"              # deployment target
+    overwrite: true             # replace differing files during initial setup
+    backup_dir: "~/.local/state/archstation/backups"
   enable_service:
     services: [docker, tailscaled, ollama]
   add_user_to_group:
@@ -149,7 +151,7 @@ be run independently with
 Deploys config files from `dotfiles/` to `~/`, mirroring the directory structure. Uses SHA256 hash comparison:
 - **Destination missing** - copies the file (creates parent dirs)
 - **Destination matches** - skips (already in sync)
-- **Destination differs** - fails with SAFETY error (use `ingest` to resolve)
+- **Destination differs** - backs up and replaces it when `overwrite: true`; otherwise fails with SAFETY error (use `ingest` to resolve)
 
 ### enable_service
 

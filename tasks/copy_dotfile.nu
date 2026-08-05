@@ -3,6 +3,9 @@ use ../lib/types.nu [mk-task, mk-result]
 export def generate [config: record] {
   let source_root = $config.source_dir | path expand
   let dest_root = $config.dest_dir | path expand
+  let overwrite = ($config | get --optional overwrite | default false)
+  let backup_root = ($config | get --optional backup_dir | default "~/.local/state/archstation/backups" | path expand)
+  let backup_stamp = date now | format date "%Y%m%d-%H%M%S"
 
   glob $"($source_root)/**/*"
   | sort
@@ -19,6 +22,14 @@ export def generate [config: record] {
 
           if $src_hash == $dst_hash {
             mk-result "copy_dotfile" $label "skipped" "destination matches source"
+          } else if $overwrite {
+            let backup_rel_path = $rel_path | str trim --left --char "/"
+            let backup_path = $backup_root | path join $backup_stamp | path join $backup_rel_path
+            let backup_parent = $backup_path | path dirname
+            mkdir $backup_parent
+            cp --force $dest_path $backup_path
+            cp --force $src_path $dest_path
+            mk-result "copy_dotfile" $label "executed" $"backed up to ($backup_path), copied to ($dest_path)"
           } else {
             mk-result "copy_dotfile" $label "failed" $"SAFETY: destination file differs: ($dest_path)"
           }

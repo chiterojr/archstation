@@ -1,4 +1,9 @@
 tasks:
+  bootstrap_aur:
+    aur_helper: paru
+    aur_helper_package: paru-bin
+    aur_fallback: yay
+    aur_fallback_package: yay
   install_pkg:
     source: packages.yml
     aur_helper: paru

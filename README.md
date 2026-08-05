@@ -8,6 +8,7 @@ A minimal, opinionated system that automates workstation setup: installing packa
 
 ```nu
 nu setup.nu            # show help
+nu setup.nu bootstrap  # install paru and yay on a clean Arch system
 nu setup.nu up         # execute all tasks
 nu setup.nu preview    # dry-run, show what would run
 nu setup.nu status     # check current state (read-only)
@@ -25,6 +26,7 @@ lib/
   types.nu            Core types: mk-task, mk-result
   runner.nu           Sequential task executor with fail-fast
 tasks/
+  bootstrap_aur.nu     AUR helper bootstrap (paru + yay)
   install_pkg.nu      Package installation (pacman + AUR)
   copy_dotfile.nu     Dotfile deployment with hash-based safety
   enable_service.nu   Systemd service activation
@@ -90,6 +92,11 @@ Status is one of:
 
 ```yaml
 tasks:
+  bootstrap_aur:
+    aur_helper: paru           # primary helper to bootstrap first
+    aur_helper_package: paru-bin
+    aur_fallback: yay          # fallback helper installed by paru
+    aur_fallback_package: yay
   install_pkg:
     source: packages.yml       # where to read the package list
     aur_helper: paru           # primary AUR helper
@@ -122,6 +129,14 @@ packages:
 Flags:
 - `--aur` - install via AUR helper instead of pacman
 - `--needed <dep>` - pass additional dependency to pacman
+
+### bootstrap_aur
+
+Ensures the AUR helpers exist before any AUR package is processed. It installs
+`git` and `base-devel` with pacman, builds `paru-bin` directly from the AUR,
+and then installs `yay` through `paru`. The task is idempotent and runs first
+as part of `nu setup.nu up`. It can also be run independently with
+`nu setup.nu bootstrap`.
 
 ### copy_dotfile
 

@@ -5,6 +5,7 @@ use tasks
 
 def dispatch [task_type: string, task_config: record] {
   match $task_type {
+    "bootstrap_aur" => (tasks bootstrap_aur generate $task_config),
     "install_pkg" => (tasks install_pkg generate $task_config),
     "copy_dotfile" => (tasks copy_dotfile generate $task_config),
     "enable_service" => (tasks enable_service generate $task_config),
@@ -18,6 +19,7 @@ def dispatch [task_type: string, task_config: record] {
 
 def dispatch-check [task_type: string, task_config: record] {
   match $task_type {
+    "bootstrap_aur" => (tasks bootstrap_aur check $task_config),
     "install_pkg" => (tasks install_pkg check $task_config),
     "copy_dotfile" => (tasks copy_dotfile check $task_config),
     "enable_service" => (tasks enable_service check $task_config),
@@ -64,6 +66,14 @@ def "main ingest" [] {
   print $"(ansi cyan_bold)($separator)(ansi reset)"
   print $"(ansi green)  Ingest complete.(ansi reset)"
   print $"(ansi cyan_bold)($separator)(ansi reset)"
+}
+
+def "main bootstrap" [] {
+  let config = open config.yml
+
+  print $"(ansi cyan_bold)archstation bootstrap(ansi reset) - installing AUR helpers"
+  print ""
+  lib runner run-tasks (dispatch "bootstrap_aur" $config.tasks.bootstrap_aur)
 }
 
 def "main up" [] {
@@ -125,12 +135,14 @@ def main [] {
   print "Usage: nu setup.nu <command>"
   print ""
   print $"(ansi cyan_bold)Commands:(ansi reset)"
+  print "  bootstrap  Install and configure the AUR helpers"
   print "  up         Execute all tasks defined in config.yml"
   print "  preview    Show what would run without executing (dry-run)"
   print "  status     Check current state of all tasks (read-only)"
   print "  ingest     Absorb system changes back into the repo"
   print ""
   print $"(ansi cyan_bold)Task types:(ansi reset)"
+  print "  bootstrap_aur      Bootstrap the AUR helpers (paru/yay)"
   print "  install_pkg        Install packages via pacman or AUR helper (paru/yay)"
   print "  copy_dotfile       Copy dotfiles from dotfiles/ to ~/"
   print "  enable_service     Enable and start systemd services"

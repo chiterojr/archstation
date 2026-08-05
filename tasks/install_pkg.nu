@@ -2,7 +2,6 @@ use ../lib/types.nu [mk-task, mk-result]
 
 export def generate [config: record] {
   let aur_helper = $config.aur_helper
-  let aur_fallback = $config.aur_fallback
 
   let sync_task = mk-task "install_pkg" "pkg: sync database" {
     let result = ^sudo pacman -Sy | complete
@@ -33,12 +32,7 @@ export def generate [config: record] {
             if $install.exit_code == 0 {
               mk-result "install_pkg" $label "executed" $"($aur_helper) -S --noconfirm ($pkg_name)"
             } else {
-              let fallback = ^$aur_fallback -S --noconfirm $pkg_name | complete
-              if $fallback.exit_code == 0 {
-                mk-result "install_pkg" $label "executed" $"($aur_fallback) -S --noconfirm ($pkg_name)"
-              } else {
-                mk-result "install_pkg" $label "failed" ($fallback.stderr | str trim)
-              }
+              mk-result "install_pkg" $label "failed" ($install.stderr | str trim)
             }
           } else {
             let extra_args = $flags | where { |f| $f != "--aur" }

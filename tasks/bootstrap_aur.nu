@@ -58,7 +58,7 @@ def install-prerequisites [] {
   }
 }
 
-def install-primary [package: string, command: string] {
+def install-helper [package: string, command: string] {
   let result = build-aur-package $package
 
   if not $result.success {
@@ -70,31 +70,16 @@ def install-primary [package: string, command: string] {
   }
 }
 
-def install-fallback [helper: string, package: string, fallback: string] {
-  let result = ^$helper -S --needed --noconfirm $package | complete
-
-  if $result.exit_code != 0 {
-    failed ($result.stderr | str trim)
-  } else {
-    mk-result $task_type $task_label "executed" $"($fallback) instalado usando ($helper)"
-  }
-}
-
 def run-bootstrap [config: record] {
   let helper = $config.aur_helper
   let helper_package = $config.aur_helper_package
-  let fallback = $config.aur_fallback
-  let fallback_package = $config.aur_fallback_package
 
   if ((^id -u | str trim) == "0") {
     return (failed "makepkg não deve ser executado como root")
   }
 
-  let helper_exists = command-exists $helper
-  let fallback_exists = command-exists $fallback
-
-  if $helper_exists and $fallback_exists {
-    return (mk-result $task_type $task_label "skipped" $"($helper) e ($fallback) já estão instalados")
+  if (command-exists $helper) {
+    return (mk-result $task_type $task_label "skipped" $"($helper) já está instalado")
   }
 
   let prerequisites = install-prerequisites
@@ -102,18 +87,16 @@ def run-bootstrap [config: record] {
     return (failed $prerequisites.detail)
   }
 
+  let install_result = install-helper $helper_package $helper
+  if $install_result != null {
+    return $install_result
+  }
+
   if not (command-exists $helper) {
-    let primary_result = install-primary $helper_package $helper
-    if $primary_result != null {
-      return $primary_result
-    }
+    return (failed $"($helper) não foi encontrado após a compilação de ($helper_package)")
   }
 
-  if not (command-exists $fallback) {
-    return (install-fallback $helper $fallback_package $fallback)
-  }
-
-  mk-result $task_type $task_label "executed" $"($helper) e ($fallback) estão disponíveis"
+  mk-result $task_type $task_label "executed" $"($helper) instalado"
 }
 
 export def generate [config: record] {
@@ -122,12 +105,11 @@ export def generate [config: record] {
 
 export def check [config: record] {
   let helper_installed = command-exists $config.aur_helper
-  let fallback_installed = command-exists $config.aur_fallback
 
   [{
     task_type: $task_type
     label: $task_label
-    status: (if $helper_installed and $fallback_installed { "ok" } else { "missing" })
-    detail: $"($config.aur_helper) + ($config.aur_fallback)"
+    status: (if $helper_installed { "ok" } else { "missing" })
+    detail: $config.aur_helper
   }]
 }

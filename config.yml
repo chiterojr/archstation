@@ -2,12 +2,9 @@ tasks:
   bootstrap_aur:
     aur_helper: yay
     aur_helper_package: yay
-    aur_fallback: paru
-    aur_fallback_package: paru-bin
   install_pkg:
     source: packages.yml
     aur_helper: yay
-    aur_fallback: paru
   copy_dotfile:
     source_dir: dotfiles
     dest_dir: "~"

@@ -149,7 +149,6 @@ packages:
     - tigervnc
   aur_helpers:
     - yay --aur
-    - paru-bin --aur
 
   ingested:
     - flatpak

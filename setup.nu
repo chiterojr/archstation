@@ -71,7 +71,7 @@ def "main ingest" [] {
 def "main bootstrap" [] {
   let config = open config.yml
 
-  print $"(ansi cyan_bold)archstation bootstrap(ansi reset) - installing AUR helpers"
+  print $"(ansi cyan_bold)archstation bootstrap(ansi reset) - installing AUR helper"
   print ""
   lib runner run-tasks (dispatch "bootstrap_aur" $config.tasks.bootstrap_aur)
 }
@@ -135,15 +135,15 @@ def main [] {
   print "Usage: nu setup.nu <command>"
   print ""
   print $"(ansi cyan_bold)Commands:(ansi reset)"
-  print "  bootstrap  Install and configure the AUR helpers"
+  print "  bootstrap  Install and configure the AUR helper"
   print "  up         Execute all tasks defined in config.yml"
   print "  preview    Show what would run without executing (dry-run)"
   print "  status     Check current state of all tasks (read-only)"
   print "  ingest     Absorb system changes back into the repo"
   print ""
   print $"(ansi cyan_bold)Task types:(ansi reset)"
-  print "  bootstrap_aur      Bootstrap the AUR helpers (paru/yay)"
-  print "  install_pkg        Install packages via pacman or AUR helper (paru/yay)"
+  print "  bootstrap_aur      Bootstrap the AUR helper (yay)"
+  print "  install_pkg        Install packages via pacman or AUR helper (yay)"
   print "  copy_dotfile       Copy dotfiles from dotfiles/ to ~/"
   print "  enable_service     Enable and start systemd services"
   print "  add_user_to_group  Add current user to system groups"

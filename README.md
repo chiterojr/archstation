@@ -8,7 +8,7 @@ A minimal, opinionated system that automates workstation setup: installing packa
 
 ```nu
 nu setup.nu            # show help
-nu setup.nu bootstrap  # install paru and yay on a clean Arch system
+nu setup.nu bootstrap  # install yay on a clean Arch system
 nu setup.nu up         # execute all tasks
 nu setup.nu preview    # dry-run, show what would run
 nu setup.nu status     # check current state (read-only)
@@ -26,7 +26,7 @@ lib/
   types.nu            Core types: mk-task, mk-result
   runner.nu           Sequential task executor with fail-fast
 tasks/
-  bootstrap_aur.nu     AUR helper bootstrap (paru + yay)
+  bootstrap_aur.nu     AUR helper bootstrap (yay)
   install_pkg.nu      Package installation (pacman + AUR)
   copy_dotfile.nu     Dotfile deployment with hash-based safety
   enable_service.nu   Systemd service activation
@@ -95,12 +95,9 @@ tasks:
   bootstrap_aur:
     aur_helper: yay            # primary helper to bootstrap first
     aur_helper_package: yay
-    aur_fallback: paru         # fallback helper installed by yay
-    aur_fallback_package: paru-bin
   install_pkg:
     source: packages.yml       # where to read the package list
-    aur_helper: yay            # primary AUR helper
-    aur_fallback: paru          # fallback if primary fails
+    aur_helper: yay             # AUR helper
   copy_dotfile:
     source_dir: dotfiles       # repo directory with dotfiles
     dest_dir: "~"              # deployment target
@@ -132,10 +129,10 @@ Flags:
 
 ### bootstrap_aur
 
-Ensures the AUR helpers exist before any AUR package is processed. It installs
-`git` and `base-devel` with pacman, builds `yay` directly from the AUR,
-and then installs `paru-bin` through `yay`. The task is idempotent and runs first
-as part of `nu setup.nu up`. It can also be run independently with
+Ensures the AUR helper exists before any AUR package is processed. It installs
+`git` and `base-devel` with pacman, then builds `yay` directly from the AUR.
+The task is idempotent and runs first as part of `nu setup.nu up`. It can also
+be run independently with
 `nu setup.nu bootstrap`.
 
 ### copy_dotfile

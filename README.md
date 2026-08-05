@@ -93,14 +93,14 @@ Status is one of:
 ```yaml
 tasks:
   bootstrap_aur:
-    aur_helper: paru           # primary helper to bootstrap first
-    aur_helper_package: paru-bin
-    aur_fallback: yay          # fallback helper installed by paru
-    aur_fallback_package: yay
+    aur_helper: yay            # primary helper to bootstrap first
+    aur_helper_package: yay
+    aur_fallback: paru         # fallback helper installed by yay
+    aur_fallback_package: paru-bin
   install_pkg:
     source: packages.yml       # where to read the package list
-    aur_helper: paru           # primary AUR helper
-    aur_fallback: yay          # fallback if primary fails
+    aur_helper: yay            # primary AUR helper
+    aur_fallback: paru          # fallback if primary fails
   copy_dotfile:
     source_dir: dotfiles       # repo directory with dotfiles
     dest_dir: "~"              # deployment target
@@ -133,8 +133,8 @@ Flags:
 ### bootstrap_aur
 
 Ensures the AUR helpers exist before any AUR package is processed. It installs
-`git` and `base-devel` with pacman, builds `paru-bin` directly from the AUR,
-and then installs `yay` through `paru`. The task is idempotent and runs first
+`git` and `base-devel` with pacman, builds `yay` directly from the AUR,
+and then installs `paru-bin` through `yay`. The task is idempotent and runs first
 as part of `nu setup.nu up`. It can also be run independently with
 `nu setup.nu bootstrap`.
 

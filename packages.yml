@@ -148,8 +148,8 @@ packages:
     - qemu-base
     - tigervnc
   aur_helpers:
-    - paru-bin --aur
     - yay --aur
+    - paru-bin --aur
 
   ingested:
     - flatpak
